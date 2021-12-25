@@ -184,7 +184,7 @@ abstract class Justice { //گروه عدالت
     constructor(name:string , gold:number) {
 
             this.name=name
-        this.log=debug(`app:Invader ${name}`)
+        this.log=debug(`app:Justic ${name}`)
         this.myHungryHandler = setInterval(()=>{
             
             this.defend()
