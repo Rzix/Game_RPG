@@ -9,7 +9,7 @@ abstract class Invader { //گروه مهاجم
     chivalry:number=100;
     protected hunger:number=100;
     protected elixir?: number;
-  
+    private handlerdebugger:any;
     _damag:number=0;
     public log:any;
 
@@ -22,7 +22,7 @@ abstract class Invader { //گروه مهاجم
     constructor(name:string,elixir:number) {
         this.name=name
         this.log=debug(`app:Invader ${name}`)
-        const handler= setInterval(()=>{
+        this.handlerdebugger= setInterval(()=>{
             this.hunger-=10           
             if(this.hunger==50){
                 if(elixir>0){
@@ -37,7 +37,7 @@ abstract class Invader { //گروه مهاجم
             if(this.hunger==0){
                 this.dead
                  this.log(`the ${name} wasted!`)
-                  clearInterval(handler)
+                  clearInterval(this.handlerdebugger)
             }
             
         },Math.random()*speed)
@@ -177,6 +177,7 @@ abstract class Justice { //گروه عدالت
     _damag:number=0;//ضربه خوردن
    protected _defend:number=5
     protected gold?: number;
+    private myHungryHandler: any;
     
     log:any;
     
@@ -184,10 +185,12 @@ abstract class Justice { //گروه عدالت
 
             this.name=name
         this.log=debug(`app:Invader ${name}`)
-        const handler= setInterval(()=>{
+        this.myHungryHandler = setInterval(()=>{
             
             this.defend()
-            this.hunger-=10 
+            this.hunger-=10
+          this.log(`hunger of ${this.name} : ${this.hunger}`)  
+            console.log(`hunger:${this.hunger}`) 
             if(this.hunger==50){
                this.log(`the ${name} was hungry`) 
                if(this.purveyance>0  &&  gold>0){ 
@@ -205,13 +208,13 @@ abstract class Justice { //گروه عدالت
             }       
             }
             if(this.hunger==0 || this._damag<-15){  
-                
                 this.dead()
-                 this.log(`the ${name} wasted! damag:${this._damag}`)
-             clearInterval(handler)
-            } 
+                this.log(`the ${name} wasted! damag:${this._damag}`)
+                clearInterval(this.myHungryHandler)
+            }
         },Math.random()*speed)
     }
+    // fundstr /i wasted  (For a specific command)
    
     defend (){
         
@@ -318,9 +321,9 @@ class Angry_Man extends Justice {
     defend(){
         this.justice?.forEach((justic)=>{
             justic.defend();
-        }) 
-        
-}}
+        })         
+}
+}
 class Totorial2 {
     name:string='';
     justice2:Justice[] | undefined;
@@ -389,3 +392,6 @@ async function ground(timeout=3) {
   },3000)
 }
 ground()
+
+
+
